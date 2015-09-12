@@ -1,0 +1,32 @@
+{
+  "name": "example-grunt-browserify-coffee-coverage",
+  "version": "0.1.0",
+  "description": "Example showing coffee coverage with browserify",
+  "main": "index.js",
+  "author": "Steve Tarver <steve.tarver@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/stevetarver/example-grunt-browserify-coffee-coverage",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stevetarver/example-grunt-browserify-coffee-coverage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stevetarver/example-grunt-browserify-coffee-coverage/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "q": "^1.4.1"
+  },
+  "devDependencies": {
+    "browserify-coffee-coverage": "^1.0.2",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.1",
+    "grunt-mocha-phantom-istanbul": "^0.2.1",
+    "jade": "^1.11.0",
+    "load-grunt-tasks": "^3.2.0",
+    "time-grunt": "^1.2.1"
+  }
+}
