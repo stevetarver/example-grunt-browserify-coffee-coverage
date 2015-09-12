@@ -47,6 +47,7 @@ After a little work, I found a simple and straight-forward solution that meets a
   - Browserify the specs and include coverage
   - Run Mocha in the html page under PhantomJS
   - Generate coverage reports
+5. Integrate with Travis, CodeCov.io, Coveralls.io, David-dm and use shields.io to generate badges for each.
 
 
 ## The Tricks
@@ -107,9 +108,9 @@ browserify:
 
 ```
 
-## Integrating with Travis, CodeCov, Coveralls
+## Integrating with Travis, CodeCov, Coveralls, and David-dm
 
-It's hard to find quality code, so I love the badges that README.md files wear showing build status and code coverage. Now that our project has test coverage, let's hook that up to CI and coverage services so we can get some badges.
+It's hard to find quality code, so I love the badges that README.md files wear showing build status, code coverage, and dependency up-to-datedness. Now that our project has test coverage, let's hook that up to CI and coverage services so we can get some badges.
 
 ### Create accounts
 
@@ -119,9 +120,11 @@ Visit each of
 - [CodeCov.io](https://codecov.io)
 - [Coveralls.io](https://coveralls.io)
 
-to create an account and link it to your GitHub account - it's free for open source projects. After each has sync'd to your GitHub account, you will be able to enable projects, and thereafter, Travis will build on every push, if a ```.travis.yml``` exists and our configuration will push to CodeCov.io and Coverall.io.
+to create an account, link it to your GitHub account, and enable repos - it's free for open source projects. After each has sync'd to your GitHub account, you will be able to enable projects, and thereafter, Travis will build on every push if a ```.travis.yml``` exists, and our configuration will push to CodeCov.io and Coverall.io.
 
-I include configuration for both CodeCov.io and Coveralls.io in case you have a preference - I haven't really figured out which I like better yet.
+I include configuration for both CodeCov.io and Coveralls.io in case you have a preference - I haven't really figured out which I like better yet. 
+
+CodeCov.io has a pretty cool Chrome, FireFox, Opera extension that overlays coverage information on several GitHub code views and works perfectly with the CoffeeScript coverage we have created. Check out an overview at [YouTube](https://www.youtube.com/watch?v=d6wJKODB8_g) and install from [here](https://github.com/codecov/browser-extension#codecov-browser-extension) Safari and IE are planned additions.
 
 ### Configure .travis.yml
 
@@ -151,9 +154,21 @@ After those packages are installed, we can create scripts in our ```package.json
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
 ```
-After these changes are made, our next push will trigger a build and upload to the coverage services.
+After these changes are made, our next push will trigger a build and upload to the coverage services. You can visit each site to see how the build went and examine their offerings.
+
+### David
+
+[David](https://david-dm.org) is another great service that tracks your npm dependencies to show when they become out of date.
+
+Clicking on the badge will take you to a david-dm page that lists all of your dependencies, your required version along with the stable and latest versions of those dependencies.
+
+### shields.io
+
+[shields.io](http://shields.io) provides badges for each of these services, and many more.
 
 Check out the badges at the top of this page for a hint at how to decorate your page.
+
+**NOTE**: I included the npm version badge as an example. Since I have not published this package to npm, it shows as invalid.
 
 ## Epilog
 
