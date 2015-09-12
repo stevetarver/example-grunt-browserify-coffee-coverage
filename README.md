@@ -1,10 +1,21 @@
+[![tag:?](https://img.shields.io/github/tag/stevetarver/example-grunt-browserify-coffee-coverage.svg)](https://github.com/stevetarver/example-grunt-browserify-coffee-coverage/releases)
+[![license:mit](https://img.shields.io/badge/license-mit-green.svg)](#license)
+[![build:?](https://img.shields.io/travis/stevetarver/example-grunt-browserify-coffee-coverage/master.svg)](https://travis-ci.org/stevetarver/example-grunt-browserify-coffee-coverage)
+[![coverage:?](https://img.shields.io/coveralls/stevetarver/example-grunt-browserify-coffee-coverage/master.svg?style=flat-square)](https://coveralls.io/r/stevetarver/example-grunt-browserify-coffee-coverage)
+[![codecov.io](http://codecov.io/github/stevetarver/example-grunt-browserify-coffee-coverage/coverage.svg?branch=master)](http://codecov.io/github/stevetarver/example-grunt-browserify-coffee-coverage?branch=master)
+<br>
+[![npm:](https://img.shields.io/npm/v/example-grunt-browserify-coffee-coverage.svg)](https://www.npmjs.com/package/example-grunt-browserify-coffee-coverage)
+[![dependencies:?](https://img.shields.io/david/stevetarver/example-grunt-browserify-coffee-coverage.svg)](https://david-dm.org/stevetarver/example-grunt-browserify-coffee-coverage.svg)
+[![devDependency Status](https://david-dm.org/stevetarver/example-grunt-browserify-coffee-coverage/dev-status.svg)](https://david-dm.org/stevetarver/example-grunt-browserify-coffee-coverage#info=devDependencies)
+
 # Client side CoffeeScript code coverage
 
 This project is minimal, including only what is needed to show how to generate code coverage with the following goals:
 
 - Use CoffeeScript for everything except distributed files
 - Run Mocha/Chai in an html page using PhantomJS
-- Generate coverage reports as html for immediated viewing and lcov.info for upload to CodeCov.io or Coveralls.io
+- Generate coverage reports as html for immediated viewing
+- Upload coverage reports to CodeCov.io or Coveralls.io
 - Coverage reports show annotated CoffeeScript although the tests were run against browserify'd JavaScript.
 - Do not generate intermediate JavaScript files
 - Only use Grunt plugins/Browserify transforms - no custom webhooks, shell scripts, etc.
@@ -96,6 +107,53 @@ browserify:
 
 ```
 
+## Integrating with Travis, CodeCov, Coveralls
+
+It's hard to find quality code, so I love the badges that README.md files wear showing build status and code coverage. Now that our project has test coverage, let's hook that up to CI and coverage services so we can get some badges.
+
+### Create accounts
+
+Visit each of 
+
+- [Travis](https://travis-ci.org)
+- [CodeCov.io](https://codecov.io)
+- [Coveralls.io](https://coveralls.io)
+
+to create an account and link it to your GitHub account - it's free for open source projects. After each has sync'd to your GitHub account, you will be able to enable projects, and thereafter, Travis will build on every push, if a ```.travis.yml``` exists and our configuration will push to CodeCov.io and Coverall.io.
+
+I include configuration for both CodeCov.io and Coveralls.io in case you have a preference - I haven't really figured out which I like better yet.
+
+### Configure .travis.yml
+
+Your basic ```.travis.yml``` looks like
+
+```YAML
+language: node_js
+node_js:
+  - '0.12'
+before_install:
+  - 'npm install -g grunt-cli'
+after_success:
+  - 'npm run-script codecov'
+  - 'npm run-script coveralls'
+```
+
+Before Travis installs our package and builds it, we want grunt-cli installed globally so we can use it to run our build.
+
+After our build completes successfully, we want to upload the coverage information to the coverage services. We will be using [codecov.io](https://www.npmjs.com/package/codecov.io) and [coveralls](https://www.npmjs.com/package/coveralls) respectively.
+
+After those packages are installed, we can create scripts in our ```package.json``` to upload coverage.
+
+```JavaScript
+  "scripts": {
+    "test": "grunt",
+    "codecov": "cat ./coverage/lcov.info | ./node_modules/.bin/codecov",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+  },
+```
+After these changes are made, our next push will trigger a build and upload to the coverage services.
+
+Check out the badges at the top of this page for a hint at how to decorate your page.
 
 ## Epilog
 
